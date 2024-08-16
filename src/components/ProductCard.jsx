@@ -28,9 +28,11 @@ const ProductCard = ({
         <p className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
           {brand}
         </p>
-        <p className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
-          {category}
-        </p>
+        {category && (
+          <p className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
+            {category}
+          </p>
+        )}
       </div>
       <p className="text-gray-500 text-sm mt-2 dark:text-white">
         {description}
