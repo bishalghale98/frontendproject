@@ -10,7 +10,11 @@ import Contact from "./pages/Contact";
 import MainLayout from "./layouts/MainLayout";
 import ProductsDetails from "./pages/products/Details";
 import ProductSmartphones from "./pages/products/SmartphonesList";
-import ProductLaptops from "./pages/products/laptops";
+import ProductLaptops from "./pages/products/Laptops";
+import NotFound from "./pages/NotFound";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Dashboard from "./pages/member/Dashboard";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -25,6 +29,14 @@ const App = () => {
           <Route index element={<ProductsLists />} />
           <Route path=":id" element={<ProductsDetails />} />
         </Route>
+        <Route path="auth">
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+        <Route path="member">
+          <Route path="dashboard" element={<Dashboard />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

@@ -23,7 +23,7 @@ const navMenu = [
   {
     label: "Contact Us",
     route: "/contact",
-    auth: true,
+    auth: false,
   },
 ];
 
@@ -38,6 +38,11 @@ const authMenu = [
     label: "Register",
     route: "/auth/register",
     auth: false,
+  },
+  {
+    label: "Dashboard",
+    route: "/member/dashboard",
+    auth: true,
   },
 ];
 

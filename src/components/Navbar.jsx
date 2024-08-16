@@ -3,6 +3,8 @@ import navMenu, { authMenu } from "../constants/NavMenu";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
+  const isAuth = false;
+
   const linkClass = ({ isActive }) => {
     return isActive
       ? "bg-indigo-500  text-sm py-3 px-5 rounded font-semibold text-gray-900 dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300"
@@ -22,7 +24,7 @@ const Navbar = () => {
   return (
     <div>
       {/* Header */}
-      <header className="fixed inset-x-0  dark:bg-gray-900 dark:text-white top-0 z-30 mx-auto w-full max-w-screen-md  py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
+      <header className="fixed inset-x-0  dark:bg-gray-900 dark:text-white top-0 z-30 mx-auto w-full max-w-screen-md border py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
         <div className="px-4">
           <div className="flex items-center justify-between">
             {/* Logo and Branding */}
@@ -49,15 +51,17 @@ const Navbar = () => {
             {/* Mobile Menu Toggle and Auth Menu */}
             <div className="flex items-center justify-end gap-3 md:gap-5">
               {/* Auth Menu */}
-              {authMenu.map((menu) => (
-                <Link
-                  key={menu.id}
-                  to={menu.route}
-                  className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
-                >
-                  {menu.label}
-                </Link>
-              ))}
+              {authMenu
+                .filter((menu) => menu.auth === isAuth)
+                .map((menu) => (
+                  <Link
+                    key={menu.id}
+                    to={menu.route}
+                    className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                  >
+                    {menu.label}
+                  </Link>
+                ))}
 
               {/* Hamburger Icon for Mobile */}
               <button
@@ -103,7 +107,7 @@ const Navbar = () => {
       </header>
 
       {/* Main Content */}
-      <main className="mt-24 md:mt-36 lg:mt-40 px-4">
+      <main className=" md:pt-20 lg:pt-20 px-4 dark:bg-gray-900 dark:text-white">
         {/* Your main content goes here */}
         <div>{/* Other content */}</div>
       </main>
