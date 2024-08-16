@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
 import { login } from "../api/auth";
 import Register from "./../pages/auth/Register";
+import { toast, ToastContainer } from "react-toastify";
 
 const LoginForm = () => {
   const { register, handleSubmit, formState } = useForm({ mode: "all" });
@@ -20,7 +21,7 @@ const LoginForm = () => {
 
       console.log(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data);
     }
   }
 
@@ -173,6 +174,7 @@ const LoginForm = () => {
               </div>
             </div>
           </div>
+          <ToastContainer />
         </div>
       </div>
     </form>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
 import Login from "./../pages/auth/Login";
 import { signUp } from "../api/auth";
+import { ToastContainer } from "react-toastify";
 
 const LoginForm = () => {
   const { register, handleSubmit, watch, formState } = useForm({ mode: "all" });
@@ -154,6 +155,7 @@ const LoginForm = () => {
               </div>
             </div>
           </div>
+          <ToastContainer />
         </div>
       </div>
     </form>
