@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
 import Login from "./../pages/auth/Login";
+import { signUp } from "../api/auth";
 
 const LoginForm = () => {
   const { register, handleSubmit, watch, formState } = useForm({ mode: "all" });
@@ -10,8 +11,14 @@ const LoginForm = () => {
 
   const password = watch("password");
 
-  function submitForm(data) {
-    console.log(data);
+  async function submitForm(data) {
+    try {
+      const response = await signUp(data);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -39,7 +46,7 @@ const LoginForm = () => {
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-lg focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="name"
                     placeholder="Full Name"
-                    {...register("Name", {
+                    {...register("name", {
                       required: "Full Name is required",
                     })}
                   />
