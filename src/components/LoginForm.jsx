@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
+import { login } from "../api/auth";
 import Register from "./../pages/auth/Register";
 
 const LoginForm = () => {
@@ -9,10 +10,18 @@ const LoginForm = () => {
 
   const { errors } = formState;
 
-  console.log(errors);
+  async function submitForm(data) {
+    try {
+      const response = await login(data);
 
-  function submitForm(data) {
-    console.log(data);
+      const token = response.data.token;
+
+      localStorage.setItem("authToken", token);
+
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -89,7 +98,7 @@ const LoginForm = () => {
                   <p className="text-red-800 pl-2">{errors.email?.message}</p>
 
                   <label
-                    htmlFor="Password"
+                    htmlFor="password"
                     className="leading-7 text-xl text-gray-900 "
                   >
                     Password
@@ -97,17 +106,17 @@ const LoginForm = () => {
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-lg focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"
-                    placeholder="Password"
-                    {...register("Password", {
-                      required: "Password is required",
+                    placeholder="password"
+                    {...register("password", {
+                      required: "password is required",
                       minLength: {
                         value: 8,
-                        message: "Password must be at least 8 characters long",
+                        message: "password must be at least 8 characters long",
                       },
                     })}
                   />
                   <p className="text-red-800 pl-2">
-                    {errors.Password?.message}
+                    {errors.password?.message}
                   </p>
                   <button
                     className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
@@ -147,7 +156,6 @@ const LoginForm = () => {
                 <div className="mt-6 text-lg text-gray-600 text-center">
                   <span>Don't have an account?</span>
                   <Link to={Register} className="text-blue-400">
-                    {" "}
                     Create account
                   </Link>
                 </div>

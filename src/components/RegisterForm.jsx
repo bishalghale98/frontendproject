@@ -8,7 +8,7 @@ const LoginForm = () => {
 
   const { errors } = formState;
 
-  const password = watch("Password");
+  const password = watch("password");
 
   function submitForm(data) {
     console.log(data);
@@ -66,7 +66,7 @@ const LoginForm = () => {
                   <p className="text-red-800 pl-2">{errors.email?.message}</p>
 
                   <label
-                    htmlFor="Password"
+                    htmlFor="password"
                     className="leading-7 text-xl text-gray-900"
                   >
                     Password
@@ -74,17 +74,17 @@ const LoginForm = () => {
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-lg focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"
-                    placeholder="Password"
-                    {...register("Password", {
-                      required: "Password is required",
+                    placeholder="password"
+                    {...register("password", {
+                      required: "password is required",
                       minLength: {
                         value: 8,
-                        message: "Password must be at least 8 characters long",
+                        message: "password must be at least 8 characters long",
                       },
                     })}
                   />
                   <p className="text-red-800 pl-2">
-                    {errors.Password?.message}
+                    {errors.password?.message}
                   </p>
 
                   <label
@@ -100,7 +100,7 @@ const LoginForm = () => {
                     {...register("confirmPassword", {
                       required: "Confirm Password is required",
                       validate: (value) =>
-                        value === password || "Passwords do not match.",
+                        value == password || "Passwords do not match.",
                     })}
                   />
                   <p className="text-red-800 pl-2">

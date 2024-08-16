@@ -1,10 +1,15 @@
 import axios from "axios";
 
-const login = ({ email, password }) => {
-  axios.post(
+const login = async ({ email, password }) => {
+  const response = await axios.post(
     "https://nodejs-20240519.vercel.app/api/auth/login",
-    (email, password)
+    {
+      email,
+      password,
+    }
   );
+
+  return response;
 };
 
 export { login };
