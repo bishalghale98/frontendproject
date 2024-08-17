@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import navMenu, { authMenu } from "../constants/NavMenu";
 import { Link, NavLink } from "react-router-dom";
+import DarkModeTOggle from "./DarkModeToggle";
 
 const Navbar = () => {
   const authToken = localStorage.getItem("authToken");
@@ -9,8 +10,24 @@ const Navbar = () => {
 
   const linkClass = ({ isActive }) => {
     return isActive
-      ? "bg-indigo-500  text-sm py-3 px-5 rounded font-semibold text-gray-900 dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300"
+      ? "bg-indigo-500 text-white text-sm py-3 px-5 rounded font-semibold text-gray-900 dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300"
       : "text-sm font-semibold text-gray-900 hover:text-primary dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300";
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if authToken exists in localStorage
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Handle the logout logic here
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +81,19 @@ const Navbar = () => {
                     {menu.label}
                   </Link>
                 ))}
-
+              <>
+                {isLoggedIn && (
+                  <Link
+                    onClick={handleLogout}
+                    className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
+                  >
+                    Log out
+                  </Link>
+                )}
+              </>
+              <div>
+                <DarkModeTOggle />
+              </div>
               {/* Hamburger Icon for Mobile */}
               <button
                 className="md:hidden flex items-center justify-center p-2 rounded-md text-gray-900 dark:text-white focus:outline-none"
