@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const linkClass = ({ isActive }) => {
     return isActive
-      ? "bg-indigo-500 text-white text-sm py-3 px-5 rounded font-semibold text-gray-900 dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300"
+      ? "bg-indigo-500 text-white text-sm py-3 px-5 rounded font-semibold text-gray-900 dark:bg-gray-700 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300"
       : "text-sm font-semibold text-gray-900 hover:text-primary dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300";
   };
 

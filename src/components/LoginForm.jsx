@@ -1,38 +1,50 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
 import { login } from "../api/auth";
 import Register from "./../pages/auth/Register";
 import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
+import { LoginSpinner } from "./Spinner";
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
+
   const { register, handleSubmit, formState } = useForm({ mode: "all" });
 
   const { errors } = formState;
 
+  const navigate = useNavigate();
+
   async function submitForm(data) {
+    setLoading(true);
+
     try {
       const response = await login(data);
 
-      const token = response.data.token;
+      localStorage.setItem("authToken", response.data.token);
 
-      localStorage.setItem("authToken", token);
+      toast.success("Logged in successfully!", {
+        autoClose: 1000,
+      });
 
-      toast.success("Logged in successfully!");
-
-      console.log(response.data);
+      navigate("/");
     } catch (error) {
-      toast.error(error.response.data);
+      toast.error(error.response.data, {
+        autoClose: 1000,
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form action="" onSubmit={handleSubmit(submitForm)} noValidate>
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center dark:bg-gray-900 dark:text-white">
-        <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1 dark:bg-gray-900 dark:text-white">
-          <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 dark:bg-gray-900 dark:text-white">
-            <div className="mt-12 flex flex-col items-center dark:bg-gray-900 dark:text-white">
+        <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1 dark:bg-gray-900 dark:text-white dark:shadow-emerald-300 ">
+          <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 dark:bg-gray-900 dark:text-white ">
+            <div className="mt-12 flex flex-col items-center dark:bg-gray-900 dark:text-white ">
               <h1 className="text-2xl xl:text-3xl font-extrabold dark:bg-gray-900 dark:text-white">
                 Sign in
               </h1>
@@ -139,7 +151,10 @@ const LoginForm = () => {
                       <circle cx="8.5" cy="7" r="4" />
                       <path d="M20 8v6M23 11h-6" />
                     </svg>
-                    <span className="ml-3">Login</span>
+                    <span className="ml-3 flex items-center gap-2">
+                      Login
+                      {loading ? <LoginSpinner /> : null}
+                    </span>
                   </button>
                   {/* <p className="mt-6 text-xs text-gray-600 text-center">
                     I agree to the

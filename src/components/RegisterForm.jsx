@@ -1,11 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
 import Login from "./../pages/auth/Login";
 import { signUp } from "../api/auth";
 import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
+import { LoginSpinner } from "./Spinner";
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
+
   const { register, handleSubmit, watch, formState } = useForm({ mode: "all" });
 
   const { errors } = formState;
@@ -13,22 +18,30 @@ const LoginForm = () => {
   const password = watch("password");
 
   async function submitForm(data) {
+    setLoading(true);
+
     try {
       const response = await signUp(data);
 
-      toast.success("Registration successful!");
-
-      console.log(response);
+      toast.success("response.data", {
+        autoClose: 1000,
+      });
+      setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      toast.error(error.response.data, {
+        autoClose: 1000,
+      });
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form action="" onSubmit={handleSubmit(submitForm)} noValidate>
       <div className="dark:bg-gray-900 dark:text-white min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-        <div className="dark:bg-gray-900 dark:text-white max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+        <div className="dark:bg-gray-900 dark:text-white max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1 dark:shadow-emerald-300">
           <div className="dark:bg-gray-900 dark:text-white lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             <div className="dark:bg-gray-900 dark:text-white mt-12 flex flex-col items-center ">
               <h1 className="dark:bg-gray-900 dark:text-white text-2xl xl:text-3xl font-extrabold">
@@ -136,7 +149,9 @@ const LoginForm = () => {
                       <circle cx="8.5" cy="7" r="4" />
                       <path d="M20 8v6M23 11h-6" />
                     </svg>
-                    <span className=" ml-3">Sign Up</span>
+                    <span className=" ml-3 flex items-center gap-2">
+                      Sign Up {loading ? <LoginSpinner /> : null}
+                    </span>
                   </button>
                 </div>
                 <div className="dark:bg-gray-900 dark:text-white mt-6 text-lg text-gray-600 text-center">
