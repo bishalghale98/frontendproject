@@ -27,9 +27,10 @@ const LoginForm = () => {
 
       toast.success("Logged in successfully!", {
         autoClose: 1000,
+        onClose: () => {
+          navigate("/");
+        },
       });
-
-      navigate("/");
     } catch (error) {
       toast.error(error.response.data, {
         autoClose: 1000,
