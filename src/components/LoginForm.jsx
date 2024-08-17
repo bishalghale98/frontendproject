@@ -2,43 +2,43 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
-import { login } from "../api/auth";
 import Register from "./../pages/auth/Register";
 import { toast, ToastContainer } from "react-toastify";
-import { useState } from "react";
 import { LoginSpinner } from "./Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/auth/authActions";
+import { useEffect } from "react";
 
 const LoginForm = () => {
-  const [loading, setLoading] = useState(false);
-
   const { register, handleSubmit, formState } = useForm({ mode: "all" });
 
   const { errors } = formState;
 
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
-  async function submitForm(data) {
-    setLoading(true);
+  const { loading, error, user } = useSelector((state) => state.auth);
 
-    try {
-      const response = await login(data);
+  function submitForm(data) {
+    dispatch(loginUser(data));
+  }
 
-      localStorage.setItem("authToken", response.data.token);
-
+  useEffect(() => {
+    if (user != null) {
       toast.success("Logged in successfully!", {
-        autoClose: 1000,
+        autoClose: 500,
         onClose: () => {
           navigate("/");
         },
       });
-    } catch (error) {
-      toast.error(error.response.data, {
+    }
+    if (error) {
+      toast.error(error, {
         autoClose: 1000,
       });
-    } finally {
-      setLoading(false);
     }
-  }
+  }, [error, navigate, user]);
 
   return (
     <form action="" onSubmit={handleSubmit(submitForm)} noValidate>
