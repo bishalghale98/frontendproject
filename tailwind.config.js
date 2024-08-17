@@ -18,6 +18,12 @@ export default {
           DEFAULT: "1rem",
           sm: "3rem",
         },
+        pageTitle: {
+          fontSize: "1.875rem",
+          lineHeight: "2.25rem",
+          fontWeight: "bold",
+          marginBottom: "8px",
+        },
       },
     },
   },

@@ -59,14 +59,13 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex md:items-center md:justify-center md:gap-5">
+            <nav className="hidden md:flex md:items-center md:justify-center md:gap-5">
               {navMenu.map((menu) => (
                 <NavLink key={menu.id} to={menu.route} className={linkClass}>
                   {menu.label}
                 </NavLink>
               ))}
-            </div>
-
+            </nav>
             {/* Mobile Menu Toggle and Auth Menu */}
             <div className="flex items-center justify-end gap-3 md:gap-5">
               {/* Auth Menu */}
