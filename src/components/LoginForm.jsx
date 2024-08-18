@@ -37,7 +37,7 @@ const LoginForm = () => {
       });
     }
     if (error) {
-      toast.error(`Error: ${error}`, {
+      toast.error(error, {
         autoClose: 1000,
         onClose: () => dispatch(resetUserState()),
       });

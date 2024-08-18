@@ -2,12 +2,15 @@ import { useState } from "react";
 import navMenu, { authMenu, userMenu } from "../constants/NavMenu";
 import { Link, NavLink } from "react-router-dom";
 import DarkModeTOggle from "./DarkModeToggle";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/auth/authSlice";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
 
   const isAuth = user ? true : false;
+
+  const dispatch = useDispatch();
 
   const linkClass = ({ isActive }) => {
     return isActive
@@ -24,6 +27,10 @@ const Navbar = () => {
   const handleMenuClick = () => {
     setIsOpen(false);
   };
+
+  function logout() {
+    dispatch(logoutUser());
+  }
 
   return (
     <div>
@@ -84,7 +91,7 @@ const Navbar = () => {
 
               {user && (
                 <button // Adjust the path as needed
-                  onClick={handleMenuClick}
+                  onClick={handleMenuClick && logout}
                   className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                 >
                   Log out
@@ -140,6 +147,7 @@ const Navbar = () => {
                     <Link
                       key={menu.id}
                       to={menu.route}
+                      onClick={handleMenuClick}
                       className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
                     >
                       {menu.label}
@@ -148,6 +156,7 @@ const Navbar = () => {
 
                 {user && (
                   <button // Adjust the path as needed
+                    onClick={handleMenuClick}
                     className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                   >
                     Log out
@@ -165,6 +174,7 @@ const Navbar = () => {
                     <Link
                       key={menu.id}
                       to={menu.route}
+                      onClick={handleMenuClick}
                       className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
                     >
                       {menu.label}
