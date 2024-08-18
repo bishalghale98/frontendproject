@@ -14,29 +14,43 @@ import ProductLaptops from "./pages/products/Laptops";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import Dashboard from "./pages/member/Dashboard";
 import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./pages/member/Dashboard";
+import UnAuthLayout from "./layouts/UnAuthLayout";
+import AuthLayout from "./layouts/AuthLayout";
+import { useSelector } from "react-redux";
 
 const App = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="smartphones" element={<ProductSmartphones />} />
-        <Route path="laptops" element={<ProductLaptops />} />
+        <Route>
+          <Route index element={<Home />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="smartphones" element={<ProductSmartphones />} />
+          <Route path="laptops" element={<ProductLaptops />} />
 
-        <Route path="products">
-          <Route index element={<ProductsLists />} />
-          <Route path=":id" element={<ProductsDetails />} />
+          <Route path="products">
+            <Route index element={<ProductsLists />} />
+            <Route path=":id" element={<ProductsDetails />} />
+          </Route>
         </Route>
-        <Route path="auth">
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+
+        <Route element={<UnAuthLayout user={user} />}>
+          <Route path="auth">
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
         </Route>
-        <Route path="member">
-          <Route path="dashboard" element={<Dashboard />} />
+
+        <Route element={<AuthLayout user={user} />}>
+          <Route path="member">
+            <Route path="dashboard" element={<Dashboard />} />
+          </Route>
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Route>
     )

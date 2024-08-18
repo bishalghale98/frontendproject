@@ -1,33 +1,18 @@
-import { useEffect, useState } from "react";
-import navMenu, { authMenu } from "../constants/NavMenu";
+import { useState } from "react";
+import navMenu, { authMenu, userMenu } from "../constants/NavMenu";
 import { Link, NavLink } from "react-router-dom";
 import DarkModeTOggle from "./DarkModeToggle";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const authToken = localStorage.getItem("authToken");
+  const { user } = useSelector((state) => state.auth);
 
-  const isAuth = authToken ? true : false;
+  const isAuth = user ? true : false;
 
   const linkClass = ({ isActive }) => {
     return isActive
       ? "bg-indigo-500 text-white text-sm py-3 px-5 rounded font-semibold text-gray-900 dark:bg-gray-700 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300"
       : "text-sm font-semibold text-gray-900 hover:text-primary dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300";
-  };
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Check if authToken exists in localStorage
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    // Handle the logout logic here
-    localStorage.removeItem("authToken");
-    setIsLoggedIn(false);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -75,21 +60,37 @@ const Navbar = () => {
                   <Link
                     key={menu.id}
                     to={menu.route}
-                    className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                    onClick={handleMenuClick}
+                    className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
                   >
                     {menu.label}
                   </Link>
                 ))}
-              <>
-                {isLoggedIn && (
+
+              {/* dash and logout menu */}
+
+              {userMenu
+                .filter((menu) => menu.auth === isAuth)
+                .map((menu) => (
                   <Link
-                    onClick={handleLogout}
-                    className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
+                    key={menu.id}
+                    to={menu.route}
+                    onClick={handleMenuClick}
+                    className="hidden md:flex md:items-center md:justify-center md:rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                   >
-                    Log out
+                    {menu.label}
                   </Link>
-                )}
-              </>
+                ))}
+
+              {user && (
+                <button // Adjust the path as needed
+                  onClick={handleMenuClick}
+                  className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
+                >
+                  Log out
+                </button>
+              )}
+
               <div>
                 <DarkModeTOggle />
               </div>
@@ -131,6 +132,46 @@ const Navbar = () => {
                   {menu.label}
                 </NavLink>
               ))}
+              {/* menu start dash and logout */}
+              <div className="flex items-center gap-3">
+                {userMenu
+                  .filter((menu) => menu.auth === isAuth)
+                  .map((menu) => (
+                    <Link
+                      key={menu.id}
+                      to={menu.route}
+                      className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                    >
+                      {menu.label}
+                    </Link>
+                  ))}
+
+                {user && (
+                  <button // Adjust the path as needed
+                    className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
+                  >
+                    Log out
+                  </button>
+                )}
+              </div>
+              {/* menu end dash and logout */}
+
+              {/* menu start login and register  */}
+              <div className="flex items-center gap-3">
+                {/* Auth Menu */}
+                {authMenu
+                  .filter((menu) => menu.auth === isAuth)
+                  .map((menu) => (
+                    <Link
+                      key={menu.id}
+                      to={menu.route}
+                      className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                    >
+                      {menu.label}
+                    </Link>
+                  ))}
+              </div>
+              {/* menu end login and register  */}
             </div>
           )}
         </div>

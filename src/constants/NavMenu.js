@@ -1,3 +1,4 @@
+
 const navMenu = [
   {
     id: "home",
@@ -46,6 +47,9 @@ const authMenu = [
     route: "/auth/register",
     auth: false,
   },
+];
+
+const userMenu = [
   {
     id: "Dashboard",
     label: "Dashboard",
@@ -54,6 +58,6 @@ const authMenu = [
   },
 ];
 
-export { authMenu };
+export { authMenu, userMenu };
 
 export default navMenu;

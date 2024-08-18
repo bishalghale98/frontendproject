@@ -1,42 +1,52 @@
 /* eslint-disable no-unused-vars */
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
 import Login from "./../pages/auth/Login";
-import { signUp } from "../api/auth";
 import { toast, ToastContainer } from "react-toastify";
-import { useState } from "react";
 import { LoginSpinner } from "./Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../redux/auth/authActions";
+import { useEffect } from "react";
+import { resetUserState } from "../redux/auth/authSlice";
 
 const LoginForm = () => {
-  const [loading, setLoading] = useState(false);
-
   const { register, handleSubmit, watch, formState } = useForm({ mode: "all" });
 
   const { errors } = formState;
 
   const password = watch("password");
 
+  const dispatch = useDispatch();
+
+  const { loading, error, user } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
+  const handleRegister = (data) => {
+    dispatch(registerUser(data));
+  };
+
   async function submitForm(data) {
-    setLoading(true);
-
-    try {
-      const response = await signUp(data);
-
-      toast.success("response.data", {
-        autoClose: 1000,
-      });
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data, {
-        autoClose: 1000,
-      });
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
+    dispatch(registerUser(data));
   }
+
+  useEffect(() => {
+    if (user) {
+      toast.success("Registration successful!", {
+        autoClose: 1500,
+        onClose: () => {
+          dispatch(resetUserState()), navigate("/auth/login");
+        },
+      });
+    }
+    if (error) {
+      toast.error(error, {
+        autoClose: 1500,
+        onClose: () => dispatch(resetUserState()),
+      });
+    }
+  }, [user, error, dispatch, navigate]);
 
   return (
     <form action="" onSubmit={handleSubmit(submitForm)} noValidate>
@@ -157,7 +167,7 @@ const LoginForm = () => {
                 <div className="dark:bg-gray-900 dark:text-white mt-6 text-lg text-gray-600 text-center">
                   <span>Already have an account?</span>
                   <Link
-                    to={Login}
+                    to="/auth/login"
                     className="dark:bg-gray-900 dark:text-white text-blue-400"
                   >
                     {" "}

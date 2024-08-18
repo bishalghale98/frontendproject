@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { EMAIL_REGIX } from "../constants/regex";
-import Register from "./../pages/auth/Register";
 import { toast, ToastContainer } from "react-toastify";
 import { LoginSpinner } from "./Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/auth/authActions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { resetUserState } from "../redux/auth/authSlice";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
   const { register, handleSubmit, formState } = useForm({ mode: "all" });
@@ -16,29 +17,32 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-
   const { loading, error, user } = useSelector((state) => state.auth);
+
+  // hide and show password
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   function submitForm(data) {
     dispatch(loginUser(data));
   }
 
   useEffect(() => {
-    if (user != null) {
-      toast.success("Logged in successfully!", {
+    if (user) {
+      toast.success("Login successful!", {
         autoClose: 500,
-        onClose: () => {
-          navigate("/");
-        },
       });
     }
     if (error) {
-      toast.error(error, {
+      toast.error(`Error: ${error}`, {
         autoClose: 1000,
+        onClose: () => dispatch(resetUserState()),
       });
     }
-  }, [error, navigate, user]);
+  }, [user, error, dispatch]);
 
   return (
     <form action="" onSubmit={handleSubmit(submitForm)} noValidate>
@@ -121,18 +125,31 @@ const LoginForm = () => {
                   >
                     Password
                   </label>
-                  <input
-                    className="dark:bg-gray-900 dark:text-white w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-lg focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
-                    type="password"
-                    placeholder="password"
-                    {...register("password", {
-                      required: "password is required",
-                      minLength: {
-                        value: 8,
-                        message: "password must be at least 8 characters long",
-                      },
-                    })}
-                  />
+                  <div className="relative ">
+                    <input
+                      className="dark:bg-gray-900 dark:text-white w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-lg focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                      type={showPassword ? "text" : "password"} // Toggle between text and password
+                      placeholder="password"
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message:
+                            "Password must be at least 8 characters long",
+                        },
+                      })}
+                    />
+                    <span
+                      className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash size={24} />
+                      ) : (
+                        <FaEye size={24} />
+                      )}
+                    </span>
+                  </div>
                   <p className="text-red-800 pl-2">
                     {errors.password?.message}
                   </p>
@@ -176,7 +193,7 @@ const LoginForm = () => {
                 </div>
                 <div className="mt-6 text-lg text-gray-600 text-center dark:bg-gray-900 dark:text-white">
                   <span>Don't have an account?</span>
-                  <Link to={Register} className="text-blue-400">
+                  <Link to="/auth/register" className="text-blue-400">
                     Create account
                   </Link>
                 </div>

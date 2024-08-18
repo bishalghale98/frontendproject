@@ -7,7 +7,7 @@ const ProductCard = ({
   description,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div className="bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800 dark:border-gray-700 hover:shadow-2xl transition-shadow duration-300 ease-in-out ">
       <div className="relative overflow-hidden">
         <img
           className="object-cover w-full h-full"
