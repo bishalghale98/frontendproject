@@ -7,6 +7,13 @@ const productSlice = createSlice({
     products: [],
     loading: false,
     error: null,
+    query: {
+      filters: {},
+      sort: {
+        CreatedAt: 1,
+      },
+      limit: 10,
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
