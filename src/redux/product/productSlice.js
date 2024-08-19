@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts } from "./productActions";
+import { getAllProducts, getProductById } from "./productActions";
 
 const productSlice = createSlice({
   name: "product",
-  initialStatement: {
+  initialState: {
     products: [],
     loading: false,
     error: null,
@@ -14,14 +14,28 @@ const productSlice = createSlice({
       .addCase(getAllProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.products = null;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
-        state.loading = false;
         state.products = action.payload;
+        state.loading = false;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
-        state.error = action.error.message;
+      })
+      .addCase(getProductById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.products = null;
+      })
+      .addCase(getProductById.fulfilled, (state, action) => {
+        state.products = [action.payload];
+        state.loading = false;
+      })
+      .addCase(getProductById.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
       });
   },
 });

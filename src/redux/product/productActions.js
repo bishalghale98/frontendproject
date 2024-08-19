@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getProductList } from "../../api/product";
+import { getById, getProductList } from "../../api/product";
 
 const getAllProducts = createAsyncThunk(
   "product/list",
@@ -13,4 +13,16 @@ const getAllProducts = createAsyncThunk(
   }
 );
 
-export { getAllProducts };
+const getProductById = createAsyncThunk(
+  "product/id",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await getById(id);
+      return response.data; // Assuming your API returns user data on successful registration
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export { getAllProducts, getProductById };

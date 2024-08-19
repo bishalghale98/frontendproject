@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
+
 /* eslint-disable react/prop-types */
 const ProductCard = ({
+  id,
   name,
   category,
   brand = "Default brand",
@@ -8,23 +11,7 @@ const ProductCard = ({
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800 dark:border-gray-700 hover:shadow-2xl transition-shadow duration-300 ease-in-out ">
-      <div className="relative overflow-hidden">
-        <img
-          className="object-cover w-full h-full"
-          src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
-          alt="Product"
-        />
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <button className="bg-white text-gray-900 py-2 px-6 rounded-full font-bold hover:bg-gray-300">
-            View Product
-          </button>
-        </div>
-      </div>
-      <div className="flex items-center mt-4 gap-3">
-        <h3 className="text-xl font-bold text-gray-900  dark:text-white">
-          {name}
-        </h3>
+      <div className="flex mb-2 gap-3">
         <p className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
           {brand}
         </p>
@@ -33,6 +20,27 @@ const ProductCard = ({
             {category}
           </p>
         )}
+      </div>
+      <div className="relative overflow-hidden">
+        <img
+          className="object-cover w-full h-full"
+          src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+          alt="Product"
+        />
+        <div className="absolute inset-0 bg-black opacity-40"></div>
+        <div className="absolute inset-0 flex items-center justify-center ">
+          <Link
+            to={`${id}`}
+            className="bg-white text-gray-900 py-2 px-6 rounded-full font-bold hover:bg-gray-300"
+          >
+            View Product
+          </Link>
+        </div>
+      </div>
+      <div className="flex items-center mt-4 gap-3">
+        <h3 className="text-xl font-bold text-gray-900  dark:text-white">
+          {name}
+        </h3>
       </div>
       <p className="text-gray-500 text-sm mt-2 dark:text-white">
         {description}
