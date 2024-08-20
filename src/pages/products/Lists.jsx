@@ -7,13 +7,15 @@ import { ProductListSpinner } from "../../components/Spinner";
 import ProductsFilter from "../../components/ProductsFilter";
 
 const ProductsLists = () => {
-  const { loading, error, products } = useSelector((state) => state.product);
+  const { loading, error, products, query } = useSelector(
+    (state) => state.product
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllProducts());
-  }, [dispatch]);
+    dispatch(getAllProducts(query));
+  }, [dispatch, query]);
 
   useEffect(() => {
     if (error) {
@@ -21,17 +23,7 @@ const ProductsLists = () => {
         autoClose: 1000,
       });
     }
-  }, [error, loading]);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[95vh] dark:bg-gray-900 dark:text-white">
-        <div className="px-4">
-          <ProductListSpinner />
-        </div>
-      </div>
-    );
-  }
+  }, [error]);
 
   return (
     <div className=" dark:bg-gray-900 dark:text-white py-16  ">
@@ -44,11 +36,19 @@ const ProductsLists = () => {
           <ProductsFilter />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-          {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center h-[95vh] dark:bg-gray-900 dark:text-white">
+            <div className="px-4">
+              <ProductListSpinner />
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+            {products.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+        )}
       </div>
       <ToastContainer />
     </div>

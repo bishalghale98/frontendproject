@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts, getProductById } from "./productActions";
+import {
+  getAllProducts,
+  getElectronicsList,
+  getProductById,
+} from "./productActions";
 
 const productSlice = createSlice({
   name: "product",
@@ -7,21 +11,24 @@ const productSlice = createSlice({
     products: [],
     loading: false,
     error: null,
-    query: {
-      filters: {},
-      sort: {
-        CreatedAt: 1,
-      },
-      limit: 10,
+    query: null,
+  },
+  reducers: {
+    setLimit: (state, action) => {
+      state.query = { ...state.query, limit: action.payload };
+    },
+    setSort: (state, action) => {
+      state.query = { ...state.query, sort: action.payload };
+    },
+    setFilters: (state, action) => {
+      state.query = { ...state.query, filters: action.payload };
     },
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.products = null;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.products = action.payload;
@@ -34,7 +41,6 @@ const productSlice = createSlice({
       .addCase(getProductById.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.products = null;
       })
       .addCase(getProductById.fulfilled, (state, action) => {
         state.products = [action.payload];
@@ -43,8 +49,22 @@ const productSlice = createSlice({
       .addCase(getProductById.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
+      })
+      .addCase(getElectronicsList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getElectronicsList.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.loading = false;
+      })
+      .addCase(getElectronicsList.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
       });
   },
 });
+
+export const { setLimit, setSort, setFilters } = productSlice.actions;
 
 export default productSlice.reducer;

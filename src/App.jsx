@@ -10,7 +10,7 @@ import Contact from "./pages/Contact";
 import MainLayout from "./layouts/MainLayout";
 import ProductsDetails from "./pages/products/Details";
 import ProductSmartphones from "./pages/products/SmartphonesList";
-import ProductLaptops from "./pages/products/Laptops";
+import ProductElectronics from "./pages/products/Electronics";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -30,10 +30,14 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="contact" element={<Contact />} />
           <Route path="smartphones" element={<ProductSmartphones />} />
-          <Route path="laptops" element={<ProductLaptops />} />
 
           <Route path="products">
             <Route index element={<ProductsLists />} />
+            <Route path=":id" element={<ProductsDetails />} />
+          </Route>
+
+          <Route path="Electronics">
+            <Route index element={<ProductElectronics />} />
             <Route path=":id" element={<ProductsDetails />} />
           </Route>
         </Route>

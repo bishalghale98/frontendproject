@@ -1,4 +1,3 @@
-
 const navMenu = [
   {
     id: "home",
@@ -9,7 +8,7 @@ const navMenu = [
   {
     id: "Products",
     label: "Products",
-    route: "/Products",
+    route: "/products",
     auth: false,
   },
   {
@@ -19,9 +18,9 @@ const navMenu = [
     auth: false,
   },
   {
-    id: "Laptops",
-    label: "Laptops",
-    route: "/laptops",
+    id: "Electronic",
+    label: "Electronics",
+    route: "/electronics",
     auth: false,
   },
 
