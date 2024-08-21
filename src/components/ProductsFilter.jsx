@@ -1,7 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFilters, setLimit, setSort } from "../redux/product/productSlice";
 
 const ProductsFilter = () => {
+  const { query, categories } = useSelector((state) => state.product);
+
   const dispatch = useDispatch();
 
   function setProductsLimit(limit) {
@@ -15,8 +17,11 @@ const ProductsFilter = () => {
   }
 
   function filterProductsByName(filters) {
-    dispatch(setFilters(filters ?? []));
-    console.log(filters);
+    dispatch(setFilters(filters ?? {}));
+  }
+
+  function filterProductsByCategory(filters) {
+    dispatch(setFilters(filters ?? {}));
   }
 
   return (
@@ -35,6 +40,7 @@ const ProductsFilter = () => {
                 onChange={(e) => filterProductsByName({ name: e.target.value })}
                 type="text"
                 id="name"
+                value={query?.filters?.name}
                 placeholder="Iphone 14 Pro"
                 className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white"
               />
@@ -49,9 +55,16 @@ const ProductsFilter = () => {
               </label>
               <select
                 id="category"
+                value={query?.filters?.category}
+                onChange={(e) =>
+                  filterProductsByCategory({ category: e.target.value })
+                }
                 className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white"
               >
-                <option>{}</option>
+                <option value="">Select Category</option>
+                {categories.map((category) => (
+                  <option key={category}>{category}</option>
+                ))}
               </select>
             </div>
 
@@ -64,6 +77,7 @@ const ProductsFilter = () => {
               </label>
               <select
                 onChange={(e) => setProductsSort(e.target.value)}
+                value={JSON.stringify(query?.sort)}
                 id="sort"
                 className="mt-2 block w-full rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white"
               >
@@ -88,6 +102,7 @@ const ProductsFilter = () => {
               </label>
               <select
                 onChange={(e) => setProductsLimit(e.target.value)}
+                value={query?.limit ?? 10}
                 id="limit"
                 className="mt-2 block w-full cursor-pointer rounded-md border border-gray-100 bg-gray-100 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-900 dark:text-white"
               >

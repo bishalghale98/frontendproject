@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllProducts,
+  getCategoriesList,
   getElectronicsList,
   getProductById,
+  getSmartphonesList,
 } from "./productActions";
 
 const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
+    categories: [],
     loading: false,
     error: null,
     query: null,
@@ -59,6 +62,30 @@ const productSlice = createSlice({
         state.loading = false;
       })
       .addCase(getElectronicsList.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSmartphonesList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSmartphonesList.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSmartphonesList.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCategoriesList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCategoriesList.fulfilled, (state, action) => {
+        state.categories = action.payload;
+        state.loading = false;
+      })
+      .addCase(getCategoriesList.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       });

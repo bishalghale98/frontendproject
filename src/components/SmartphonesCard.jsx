@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-const ElectronicsCard = ({
+const SmartphonesCard = ({
   id,
   name,
   category,
@@ -109,4 +109,4 @@ const ElectronicsCard = ({
   );
 };
 
-export default ElectronicsCard;
+export default SmartphonesCard;
