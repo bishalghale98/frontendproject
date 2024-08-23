@@ -35,14 +35,14 @@ const Navbar = () => {
   return (
     <div>
       {/* Header */}
-      <header className="fixed inset-x-0 bg-white  dark:bg-gray-900 dark:text-white top-0 z-30 mx-auto w-full max-w-screen-md border py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
+      <header className="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md bg-white dark:bg-gray-900 dark:text-white border py-3 shadow backdrop-blur-lg md:top-6 md:rounded-3xl lg:max-w-screen-lg">
         <div className="px-4">
           <div className="flex items-center justify-between">
             {/* Logo and Branding */}
             <div className="flex shrink-0">
               <Link
                 aria-current="page"
-                className="flex items-center dark:bg-gray-900 dark:text-white"
+                className="flex items-center"
                 to="/"
                 onClick={handleMenuClick}
               >
@@ -51,13 +51,14 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex md:items-center md:justify-center md:gap-5">
+            <div className="hidden md:flex md:items-center md:gap-5">
               {navMenu.map((menu) => (
                 <NavLink key={menu.id} to={menu.route} className={linkClass}>
                   {menu.label}
                 </NavLink>
               ))}
             </div>
+
             {/* Mobile Menu Toggle and Auth Menu */}
             <div className="flex items-center justify-end gap-3 md:gap-5">
               {/* Auth Menu */}
@@ -68,14 +69,13 @@ const Navbar = () => {
                     key={menu.id}
                     to={menu.route}
                     onClick={handleMenuClick}
-                    className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                    className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                   >
                     {menu.label}
                   </Link>
                 ))}
 
-              {/* dash and logout menu */}
-
+              {/* Dashboard and Logout Menu */}
               {userMenu
                 .filter((menu) => menu.auth === isAuth)
                 .map((menu) => (
@@ -83,24 +83,23 @@ const Navbar = () => {
                     key={menu.id}
                     to={menu.route}
                     onClick={handleMenuClick}
-                    className="hidden md:flex md:items-center md:justify-center md:rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
+                    className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                   >
                     {menu.label}
                   </Link>
                 ))}
 
               {user && (
-                <button // Adjust the path as needed
-                  onClick={handleMenuClick && logout}
+                <button
+                  onClick={logout}
                   className="hidden md:flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                 >
                   Log out
                 </button>
               )}
 
-              <div>
-                <DarkModeTOggle />
-              </div>
+              <DarkModeTOggle />
+
               {/* Hamburger Icon for Mobile */}
               <button
                 className="md:hidden flex items-center justify-center p-2 rounded-md text-gray-900 dark:text-white focus:outline-none"
@@ -133,13 +132,14 @@ const Navbar = () => {
                 <NavLink
                   key={menu.id}
                   to={menu.route}
-                  className="block text-sm font-semibold text-gray-900 hover:text-primary dark:bg-gray-900 dark:text-white dark:hover:bg-slate-800 dark:hover:text-blue-300 border-b border-gray-500 py-2"
+                  className="block text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-500 py-2 hover:text-primary dark:hover:bg-slate-800 dark:hover:text-blue-300"
                   onClick={handleMenuClick}
                 >
                   {menu.label}
                 </NavLink>
               ))}
-              {/* menu start dash and logout */}
+
+              {/* Dashboard and Logout for Mobile */}
               <div className="flex items-center gap-3">
                 {userMenu
                   .filter((menu) => menu.auth === isAuth)
@@ -148,26 +148,24 @@ const Navbar = () => {
                       key={menu.id}
                       to={menu.route}
                       onClick={handleMenuClick}
-                      className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                      className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                     >
                       {menu.label}
                     </Link>
                   ))}
 
                 {user && (
-                  <button // Adjust the path as needed
-                    onClick={handleMenuClick}
+                  <button
+                    onClick={logout}
                     className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                   >
                     Log out
                   </button>
                 )}
               </div>
-              {/* menu end dash and logout */}
 
-              {/* menu start login and register  */}
+              {/* Login and Register for Mobile */}
               <div className="flex items-center gap-3">
-                {/* Auth Menu */}
                 {authMenu
                   .filter((menu) => menu.auth === isAuth)
                   .map((menu) => (
@@ -175,20 +173,19 @@ const Navbar = () => {
                       key={menu.id}
                       to={menu.route}
                       onClick={handleMenuClick}
-                      className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white  transition-all duration-150 hover:bg-blue-500"
+                      className="flex items-center justify-center rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-all duration-150 hover:bg-blue-500"
                     >
                       {menu.label}
                     </Link>
                   ))}
               </div>
-              {/* menu end login and register  */}
             </div>
           )}
         </div>
       </header>
 
       {/* Main Content */}
-      <main className=" md:pt-20 lg:pt-20 px-4 dark:bg-gray-900 dark:text-white">
+      <main className="px-4 pt-20 md:pt-20 lg:pt-20 dark:bg-gray-900 dark:text-white">
         {/* Your main content goes here */}
         <div>{/* Other content */}</div>
       </main>

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { addProductToCart } from "../redux/cart/CartSlice";
+import { useDispatch } from "react-redux";
 
 /* eslint-disable react/prop-types */
 const ProductCard = ({
@@ -9,6 +11,12 @@ const ProductCard = ({
   price = 0,
   description,
 }) => {
+  const dispatch = useDispatch();
+
+  function addToCart() {
+    dispatch(addProductToCart({ id, name, category, brand, price }));
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800 dark:border-gray-700 hover:shadow-2xl transition-shadow duration-300 ease-in-out ">
       <div className="flex mb-2 gap-3">
@@ -49,7 +57,10 @@ const ProductCard = ({
         <span className="text-gray-900 font-bold text-lg dark:text-white">
           ${price}
         </span>
-        <button className=" dark:text-white py-2 px-4 bg-gray-700 text-white rounded-full font-bold hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900">
+        <button
+          onClick={addToCart}
+          className=" dark:text-white py-2 px-4 bg-gray-700 text-white rounded-full font-bold hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900"
+        >
           Add to Cart
         </button>
       </div>

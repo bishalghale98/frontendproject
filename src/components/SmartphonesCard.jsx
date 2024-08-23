@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addProductToCart } from "../redux/cart/CartSlice";
 
 const SmartphonesCard = ({
   id,
@@ -8,6 +10,12 @@ const SmartphonesCard = ({
   brand = "Default brand",
   price = 0,
 }) => {
+  const dispatch = useDispatch();
+
+  function addToCart() {
+    dispatch(addProductToCart({ id, name, category, brand, price }));
+  }
+
   return (
     <div className="relative m-4 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
       <Link
@@ -63,8 +71,8 @@ const SmartphonesCard = ({
           </h4>
         </div>
         <div className="flex flex-col gap-2">
-          <Link
-            to="#"
+          <button
+            onClick={addToCart}
             className="flex items-center justify-center rounded-md bg-slate-900 px-4 sm:px-5 py-2 text-center text-sm font-medium text-white hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500"
           >
             <svg
@@ -82,7 +90,7 @@ const SmartphonesCard = ({
               />
             </svg>
             Add to cart
-          </Link>
+          </button>
           <Link
             to={`${id}`}
             className="flex items-center justify-center rounded-md bg-blue-600 px-4 sm:px-5 py-2 text-center text-sm font-medium text-white hover:bg-blue-500 dark:hover:bg-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500"
