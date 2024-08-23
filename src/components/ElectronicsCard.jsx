@@ -17,9 +17,9 @@ const ElectronicsCard = ({
   }
 
   return (
-    <div className="relative m-4 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+    <div className="relative m-2 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
       <Link
-        className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl sm:h-72 md:h-80 lg:h-96"
+        className="relative mx-2 mt-2 flex h-48 overflow-hidden rounded-xl sm:h-60 md:h-72 lg:h-80"
         to={`${id}`}
       >
         <img
@@ -28,28 +28,24 @@ const ElectronicsCard = ({
           alt="product image"
         />
       </Link>
-      <div className="mt-4 px-4 sm:px-5 pb-5">
+      <div className="mt-3 px-3 pb-4 sm:px-4">
         <Link to="#">
-          <h5 className="text-lg sm:text-xl md:text-2xl tracking-tight text-slate-900 dark:text-white">
+          <h5 className="text-sm sm:text-base md:text-lg tracking-tight text-slate-900 dark:text-white">
             {name}
           </h5>
         </Link>
-        <div className="mt-2 mb-5 flex items-center justify-between">
+        <div className="mt-2 mb-4 flex items-center justify-between">
           <p>
-            <span className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+            <span className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">
               $ {price}
-            </span>
-            <span className="text-xs sm:text-sm md:text-base text-slate-900 line-through dark:text-gray-300">
-              {null}
             </span>
           </p>
           <div className="flex items-center">
-            {/* SVG icons for rating */}
             {[...Array(5)].map((_, i) => (
               <svg
                 key={i}
                 aria-hidden="true"
-                className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-yellow-300"
+                className="h-4 w-4 text-yellow-300"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,27 +53,27 @@ const ElectronicsCard = ({
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
               </svg>
             ))}
-            <span className="mr-2 ml-3 text-black rounded bg-yellow-200 dark:bg-yellow-300 px-2.5 py-0.5 text-xs font-semibold">
+            <span className="ml-2 text-xs font-semibold text-black rounded bg-yellow-200 dark:bg-yellow-300 px-2 py-0.5">
               5.0
             </span>
           </div>
         </div>
-        <div className="flex gap-2">
-          <h4 className="bg-brandBlue w-max py-1 px-3 rounded-md my-2 text-xs sm:text-sm md:text-base lg:text-lg">
+        <div className="flex flex-wrap gap-2">
+          <h4 className="bg-brandBlue w-max py-1 px-2 rounded-md text-xs sm:text-sm md:text-base">
             {brand}
           </h4>
-          <h4 className="bg-brandBlue w-max py-1 px-3 rounded-md my-2 text-xs sm:text-sm md:text-base lg:text-lg">
+          <h4 className="bg-brandBlue w-max py-1 px-2 rounded-md text-xs sm:text-sm md:text-base">
             {category}
           </h4>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mt-3">
           <button
             onClick={addToCart}
-            className="flex items-center justify-center rounded-md bg-slate-900 px-4 sm:px-5 py-2 text-center text-sm font-medium text-white hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500"
+            className="flex items-center justify-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-2 h-5 w-5 sm:h-6 sm:w-6"
+              className="mr-2 h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -93,11 +89,11 @@ const ElectronicsCard = ({
           </button>
           <Link
             to={`${id}`}
-            className="flex items-center justify-center rounded-md bg-blue-600 px-4 sm:px-5 py-2 text-center text-sm font-medium text-white hover:bg-blue-500 dark:hover:bg-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500"
+            className="flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 dark:hover:bg-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-2 h-5 w-5 sm:h-6 sm:w-6"
+              className="mr-2 h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
