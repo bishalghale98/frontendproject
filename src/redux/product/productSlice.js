@@ -4,6 +4,7 @@ import {
   getCategoriesList,
   getElectronicsList,
   getProductById,
+  getRelatedProducts,
   getSmartphonesList,
 } from "./productActions";
 
@@ -11,6 +12,11 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
+    product: [],
+    relatedProducts: {
+      loading: false,
+      items: [],
+    },
     categories: [],
     loading: false,
     error: null,
@@ -46,7 +52,7 @@ const productSlice = createSlice({
         state.error = null;
       })
       .addCase(getProductById.fulfilled, (state, action) => {
-        state.products = [action.payload];
+        state.product = [action.payload];
         state.loading = false;
       })
       .addCase(getProductById.rejected, (state, action) => {
@@ -88,6 +94,18 @@ const productSlice = createSlice({
       .addCase(getCategoriesList.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
+      })
+      .addCase(getRelatedProducts.pending, (state) => {
+        state.relatedProducts.loading = true;
+        state.error = null;
+      })
+      .addCase(getRelatedProducts.fulfilled, (state, action) => {
+        state.relatedProducts.items = action.payload;
+        state.relatedProducts.loading = false;
+      })
+      .addCase(getRelatedProducts.rejected, (state, action) => {
+        state.error = action.payload.error;
+        state.relatedProducts.loading = false;
       });
   },
 });

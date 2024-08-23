@@ -18,7 +18,7 @@ const CartListItems = ({ id, name, quantity, price }) => {
         <div className="w-full sm:w-1/3 font-semibold text-center sm:text-left text-gray-700">
           {name}
         </div>
-        <div className="w-full sm:w-1/3 text-center sm:text-left mt-2 sm:mt-0">
+        <div className="w-full sm:w-1/3 text-center sm:text-left mt-2 sm:mt-0 dark:text-black">
           Quantity: {quantity}
         </div>
         <div className="w-full sm:w-1/3 font-semibold text-center sm:text-left text-gray-700 mt-2 sm:mt-0">

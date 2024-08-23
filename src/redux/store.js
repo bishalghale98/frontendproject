@@ -6,6 +6,7 @@ import rootReducer from "./rootReducer";
 const persistConfig = {
   key: "root",
   storage,
+
   // 'tempData' slice will not be persisted
 };
 

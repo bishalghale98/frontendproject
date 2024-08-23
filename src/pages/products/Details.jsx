@@ -3,36 +3,34 @@ import { useParams } from "react-router-dom";
 import { getProductById } from "../../redux/product/productActions";
 import { useEffect } from "react";
 import { ProductListSpinner } from "../../components/Spinner";
-
 import ProductDetail from "../../components/ProductDetail";
+import RelatedProducts from "../../components/RelatedProducts";
 
 const Details = () => {
   const params = useParams();
-
   const dispatch = useDispatch();
-
-  const { loading, products } = useSelector((state) => state.product);
+  const { loading, product } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProductById(params.id));
   }, [dispatch, params.id]);
 
   return (
-    <div className=" dark:bg-gray-900 dark:text-white py-16 h-[95vh]  ">
-      <div className="container mx-auto px-4 dark:bg-gray-900 dark:text-white">
-        <h1 className="text-3xl font-bold mb-8 dark:bg-gray-900 dark:text-white">
-          Product Details of {products[0]?.name}
+    <div className="dark:bg-gray-900 dark:text-white min-h-screen py-8 md:py-16 px-4 md:px-8 lg:px-16">
+      <div className="container mx-auto">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center">
+          Product Details of {product[0]?.name}
         </h1>
         {loading ? (
-          <div className="flex justify-center mt-72 items-center  min:h-svh  dark:bg-gray-900 dark:text-white">
-            <div className="px-4">
-              <ProductListSpinner />
-            </div>
+          <div className="flex justify-center items-center min-h-[50vh]">
+            <ProductListSpinner />
           </div>
         ) : (
-          <ProductDetail product={{ ...products[0] }} />
+          <ProductDetail product={{ ...product[0] }} />
         )}
       </div>
+      <hr />
+      <RelatedProducts product={{ ...product[0] }} />
     </div>
   );
 };

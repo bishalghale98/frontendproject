@@ -68,10 +68,24 @@ const getCategoriesList = createAsyncThunk(
   }
 );
 
+const getRelatedProducts = createAsyncThunk(
+  "product/related",
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await getProductList(query ?? {});
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export {
   getAllProducts,
   getProductById,
   getElectronicsList,
   getSmartphonesList,
   getCategoriesList,
+  getRelatedProducts,
 };

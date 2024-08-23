@@ -53,6 +53,8 @@ const getCategories = async () => {
   return response;
 };
 
+// related product
+
 export {
   getProductList,
   getById,
