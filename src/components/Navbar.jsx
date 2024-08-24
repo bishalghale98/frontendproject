@@ -30,6 +30,7 @@ const Navbar = () => {
 
   function logout() {
     dispatch(logoutUser());
+    localStorage.removeItem("authToken");
   }
 
   return (

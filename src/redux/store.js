@@ -6,6 +6,8 @@ import rootReducer from "./rootReducer";
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["auth", "cart"],
+  blacklist: ["product"],
 
   // 'tempData' slice will not be persisted
 };

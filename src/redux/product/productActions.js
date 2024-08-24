@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  addProduct,
+  deleteProduct,
   getById,
   getCategories,
   getElectronicsProducts,
@@ -81,6 +83,32 @@ const getRelatedProducts = createAsyncThunk(
   }
 );
 
+const addNewProduct = createAsyncThunk(
+  "product/add",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await addProduct(data);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+const deleteProductById = createAsyncThunk(
+  "product/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await deleteProduct(id);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export {
   getAllProducts,
   getProductById,
@@ -88,4 +116,6 @@ export {
   getSmartphonesList,
   getCategoriesList,
   getRelatedProducts,
+  addNewProduct,
+  deleteProductById,
 };

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { addProductToCart } from "../redux/cart/CartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { BiPencil, BiTrash } from "react-icons/bi";
+import { deleteProductById } from "../redux/product/productActions";
 
 /* eslint-disable react/prop-types */
 const ProductCard = ({
@@ -11,10 +13,16 @@ const ProductCard = ({
   price = 0,
   description,
 }) => {
+  const { user } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
   function addToCart() {
     dispatch(addProductToCart({ id, name, category, brand, price }));
+  }
+
+  function deleteProduct() {
+    dispatch(deleteProductById(id));
   }
 
   return (
@@ -63,6 +71,24 @@ const ProductCard = ({
         >
           Add to Cart
         </button>
+      </div>
+      <div
+        onClick={deleteProduct}
+        className="flex items-center justify-between mt-4"
+      >
+        {user.roles.includes("ADMIN") && (
+          <div
+            onClick={deleteProduct}
+            className="flex items-center justify-between mt-4"
+          >
+            <button className="flex items-center gap-2 bg-red-800 text-white py-2 px-4 rounded-full font-bold hover:bg-red-900">
+              Delete <BiTrash />
+            </button>
+            <button>
+              <BiPencil />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
-import axios from "axios";
-import config from "../config/config";
+import api from "./api";
 
 const getProductList = async ({
   filters = {},
@@ -10,13 +9,13 @@ const getProductList = async ({
     sort
   )}&filters=${JSON.stringify(filters)}`;
 
-  const response = await axios.get(`${config.apiUrl}/api/products?${query}`);
+  const response = await api.get(`/products?${query}`);
 
   return response;
 };
 
 const getById = async (id) => {
-  const response = await axios.get(`${config.apiUrl}/api/products/${id}`);
+  const response = await api.get(`/products/${id}`);
 
   return response;
 };
@@ -29,7 +28,7 @@ const getElectronicsProducts = async ({
   const query = `limit=${limit}&offset=0&sort=${JSON.stringify(
     sort
   )}&filters=${JSON.stringify(filters)}`;
-  const response = await axios.get(`${config.apiUrl}/api/products?${query}`);
+  const response = await api.get(`/products?${query}`);
 
   return response;
 };
@@ -42,13 +41,30 @@ const getSmartphonesProducts = async ({
   const query = `limit=${limit}&offset=0&sort=${JSON.stringify(
     sort
   )}&filters=${JSON.stringify(filters)}`;
-  const response = await axios.get(`${config.apiUrl}/api/products?${query}`);
+  const response = await api.get(`/products?${query}`);
 
   return response;
 };
 
 const getCategories = async () => {
-  const response = await axios.get(`${config.apiUrl}/api/products/categories`);
+  const response = await api.get(`/products/categories`);
+
+  return response;
+};
+
+const addProduct = async ({ name, category, price, brand }) => {
+  const response = await api.post(`/products`, {
+    name,
+    category,
+    price,
+    brand,
+  });
+
+  return response;
+};
+
+const deleteProduct = async (id) => {
+  const response = await api.delete(`/products/${id}`);
 
   return response;
 };
@@ -61,4 +77,6 @@ export {
   getElectronicsProducts,
   getSmartphonesProducts,
   getCategories,
+  addProduct,
+  deleteProduct,
 };
