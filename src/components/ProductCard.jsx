@@ -3,6 +3,8 @@ import { addProductToCart } from "../redux/cart/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { deleteProductById } from "../redux/product/productActions";
+import { ConfirmDeleteModal } from "./Modal";
+import { useState } from "react";
 
 /* eslint-disable react/prop-types */
 const ProductCard = ({
@@ -15,6 +17,8 @@ const ProductCard = ({
 }) => {
   const { user } = useSelector((state) => state.auth);
 
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
   const dispatch = useDispatch();
 
   function addToCart() {
@@ -22,73 +26,83 @@ const ProductCard = ({
   }
 
   function deleteProduct() {
+    setShowDeletePopup(true);
+  }
+
+  function handleCancel() {
+    setShowDeletePopup(false);
+  }
+
+  function confirmDeleteProduct() {
     dispatch(deleteProductById(id));
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800 dark:border-gray-700 hover:shadow-2xl transition-shadow duration-300 ease-in-out ">
-      <div className="flex mb-2 gap-3">
-        <p className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
+    <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out p-4 md:p-6 lg:p-8">
+      <div className="mb-3">
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded-full inline-block">
           {brand}
         </p>
         {category && (
-          <p className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
+          <p className="text-sm font-medium text-gray-700 dark:text-gray-300 bg-purple-100 dark:bg-purple-900 px-2 py-1 rounded-full inline-block ml-2">
             {category}
           </p>
         )}
       </div>
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-lg">
         <img
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-48 md:h-56 lg:h-64"
           src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
           alt="Product"
         />
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="absolute inset-0 flex items-center justify-center ">
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
           <Link
             to={`${id}`}
-            className="bg-white text-gray-900 py-2 px-6 rounded-full font-bold hover:bg-gray-300"
+            className="bg-white text-gray-900 py-2 px-6 rounded-full font-semibold hover:bg-gray-200 transition-colors"
           >
             View Product
           </Link>
         </div>
       </div>
-      <div className="flex items-center mt-4 gap-3">
-        <h3 className="text-xl font-bold text-gray-900  dark:text-white">
-          {name}
-        </h3>
-      </div>
-      <p className="text-gray-500 text-sm mt-2 dark:text-white">
+      <h3 className="mt-4 text-lg md:text-xl font-bold text-gray-900 dark:text-white">
+        {name}
+      </h3>
+      <p className="text-gray-500 dark:text-gray-300 text-sm md:text-base mt-2">
         {description}
       </p>
-      <div className="flex items-center justify-between mt-4">
-        <span className="text-gray-900 font-bold text-lg dark:text-white">
+      <div className="mt-4 flex items-center justify-between">
+        <span className="text-lg font-bold text-gray-900 dark:text-white">
           ${price}
         </span>
         <button
           onClick={addToCart}
-          className=" dark:text-white py-2 px-4 bg-gray-700 text-white rounded-full font-bold hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900"
+          className="py-2 px-4 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors dark:bg-blue-500 dark:hover:bg-blue-600"
         >
           Add to Cart
         </button>
       </div>
-      <div
-        onClick={deleteProduct}
-        className="flex items-center justify-between mt-4"
-      >
-        {user.roles.includes("ADMIN") && (
-          <div
+      {user.roles.includes("ADMIN") && (
+        <div className="flex items-center justify-between mt-4">
+          <button
             onClick={deleteProduct}
-            className="flex items-center justify-between mt-4"
+            className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-full font-semibold hover:bg-red-700 transition-colors"
           >
-            <button className="flex items-center gap-2 bg-red-800 text-white py-2 px-4 rounded-full font-bold hover:bg-red-900">
-              Delete <BiTrash />
-            </button>
-            <button>
-              <BiPencil />
-            </button>
-          </div>
-        )}
+            Delete <BiTrash />
+          </button>
+          <button className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition-colors">
+            Edit <BiPencil />
+          </button>
+        </div>
+      )}
+
+      <div>
+        <ConfirmDeleteModal
+          isOpen={showDeletePopup}
+          onClose={handleCancel}
+          name={name}
+          onDelete={confirmDeleteProduct}
+        />
       </div>
     </div>
   );

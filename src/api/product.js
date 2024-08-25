@@ -21,7 +21,7 @@ const getById = async (id) => {
 };
 
 const getElectronicsProducts = async ({
-  filters = { category: "electronics" },
+  filters = { category: "electronic" },
   sort = { createdAt: -1 },
   limit = 10,
 }) => {
