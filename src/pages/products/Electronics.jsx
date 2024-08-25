@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { getElectronicsList } from "../../redux/product/productActions";
 import { toast, ToastContainer } from "react-toastify";
 import { ProductListSpinner } from "../../components/Spinner";
-import ElectronicsCard from "../../components/ElectronicsCard";
+import ProductCard from "../../components/ProductCard";
 
 const Electronic = () => {
   const { loading, error, products } = useSelector((state) => state.product);
@@ -39,7 +39,7 @@ const Electronic = () => {
           <div className="flex justify-center ">
             <div className="grid sm:items-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product) => (
-                <ElectronicsCard key={product.id} {...product} />
+                <ProductCard key={product.id} {...product} />
               ))}
             </div>
           </div>

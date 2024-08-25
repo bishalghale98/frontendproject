@@ -16,7 +16,6 @@ const ProductCard = ({
   description,
 }) => {
   const { user } = useSelector((state) => state.auth);
-
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   const dispatch = useDispatch();
@@ -36,6 +35,11 @@ const ProductCard = ({
   function confirmDeleteProduct() {
     dispatch(deleteProductById(id));
   }
+
+  // Function to check if user is logged in and has ADMIN role
+  const userIsAdmin = () => {
+    return user && user.roles && user.roles.includes("ADMIN");
+  };
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out p-4 md:p-6 lg:p-8">
@@ -82,7 +86,7 @@ const ProductCard = ({
           Add to Cart
         </button>
       </div>
-      {user.roles.includes("ADMIN") && (
+      {userIsAdmin() && (
         <div className="flex items-center justify-between mt-4">
           <button
             onClick={deleteProduct}
@@ -95,15 +99,12 @@ const ProductCard = ({
           </button>
         </div>
       )}
-
-      <div>
-        <ConfirmDeleteModal
-          isOpen={showDeletePopup}
-          onClose={handleCancel}
-          name={name}
-          onDelete={confirmDeleteProduct}
-        />
-      </div>
+      <ConfirmDeleteModal
+        isOpen={showDeletePopup}
+        onClose={handleCancel}
+        name={name}
+        onDelete={confirmDeleteProduct}
+      />
     </div>
   );
 };
