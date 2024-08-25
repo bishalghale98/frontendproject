@@ -8,13 +8,14 @@ import {
   getProductById,
   getRelatedProducts,
   getSmartphonesList,
+  updateProduct,
 } from "./productActions";
 
 const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
-    product: [],
+    product: {},
     addProducts: false,
     relatedProducts: {
       loading: false,
@@ -25,6 +26,10 @@ const productSlice = createSlice({
     error: null,
     query: null,
     delete: {
+      loading: false,
+      success: false,
+    },
+    edit: {
       loading: false,
       success: false,
     },
@@ -52,6 +57,7 @@ const productSlice = createSlice({
         state.loading = true;
         state.error = null;
         state.delete.success = false;
+        state.edit.loading = false;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.products = action.payload;
@@ -144,6 +150,18 @@ const productSlice = createSlice({
       .addCase(deleteProductById.rejected, (state, action) => {
         state.error = action.payload;
         state.delete.loading = false;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.edit.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProduct.fulfilled, (state) => {
+        state.edit.success = true;
+        state.edit.loading = false;
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.error = action.payload;
+        state.edit.loading = false;
       });
   },
 });

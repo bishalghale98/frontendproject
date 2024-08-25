@@ -69,6 +69,17 @@ const deleteProduct = async (id) => {
   return response;
 };
 
+const editProduct = async (id, { name, category, price, brand }) => {
+  const response = await api.put(`/products/${id}`, {
+    name,
+    category,
+    price,
+    brand,
+  });
+
+  return response;
+};
+
 // related product
 
 export {
@@ -79,4 +90,5 @@ export {
   getCategories,
   addProduct,
   deleteProduct,
+  editProduct,
 };

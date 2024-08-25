@@ -19,6 +19,7 @@ import Dashboard from "./pages/member/Dashboard";
 import UnAuthLayout from "./layouts/UnAuthLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import { useSelector } from "react-redux";
+import EditProduct from "./pages/products/Edit";
 
 const App = () => {
   const { user } = useSelector((state) => state.auth);
@@ -33,16 +34,19 @@ const App = () => {
           <Route path="smartphones">
             <Route index element={<ProductSmartphones />} />
             <Route path=":id" element={<ProductsDetails />} />
+            <Route path="edit/:id" element={<EditProduct />} />
           </Route>
 
           <Route path="products">
             <Route index element={<ProductsLists />} />
             <Route path=":id" element={<ProductsDetails />} />
+            <Route path="edit/:id" element={<EditProduct />} />
           </Route>
 
           <Route path="Electronics">
             <Route index element={<ProductElectronics />} />
             <Route path=":id" element={<ProductsDetails />} />
+            <Route path="edit/:id" element={<EditProduct />} />
           </Route>
         </Route>
 
