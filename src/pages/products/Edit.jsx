@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getProductById,
   updateProduct,
@@ -8,17 +8,35 @@ import {
 import EditProductForm from "../../components/EditProduct";
 
 const EditProduct = () => {
-  const { loading, product } = useSelector((state) => state.product);
+  const { loading } = useSelector((state) => state.product);
+
+  const { user } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const params = useParams();
 
   useEffect(() => {
-    dispatch(getProductById(params.id));
-  }, [dispatch, params.id]);
+    if (user?.roles[0] !== "ADMIN") {
+      navigate("/"); // Redirect to home or another page if not ADMIN
+      return;
+    }
+    dispatch(getProductById(params?.id));
+  }, [dispatch, params?.id, user, navigate]);
 
   const submitForm = (data) => {
-    dispatch(updateProduct(data));
+    if (user?.roles[0] === "ADMIN") {
+      dispatch(updateProduct(data));
+    } else {
+      navigate("/"); // Redirect if somehow a non-admin tries to submit the form
+    }
   };
+
+  if (user?.roles[0] !== "ADMIN") {
+    return null; // Optionally render nothing or a message
+  }
 
   return (
     <section className="min-h-screen bg-gray-100 dark:bg-gray-800 flex items-center justify-center p-4">
@@ -32,7 +50,7 @@ const EditProduct = () => {
             <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
           </div>
         ) : (
-          <EditProductForm product={product[0]} onSubmit={submitForm} />
+          <EditProductForm submitForm={submitForm} />
         )}
       </div>
     </section>

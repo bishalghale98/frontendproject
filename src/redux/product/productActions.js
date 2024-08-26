@@ -114,7 +114,7 @@ const updateProduct = createAsyncThunk(
   "product/edit",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await editProduct(data);
+      const response = await editProduct(data.id, data);
 
       return response.data;
     } catch (error) {

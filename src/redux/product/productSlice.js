@@ -25,6 +25,8 @@ const productSlice = createSlice({
     loading: false,
     error: null,
     query: null,
+    currentPage: 1,
+    totalPages: 1,
     delete: {
       loading: false,
       success: false,
@@ -50,6 +52,11 @@ const productSlice = createSlice({
       state.error = null;
       state.loading = false;
     },
+    resetEditProducts: (state) => {
+      state.edit.success = false;
+      state.error = null;
+      state.edit.loading = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,6 +65,7 @@ const productSlice = createSlice({
         state.error = null;
         state.delete.success = false;
         state.edit.loading = false;
+        state.edit.success = false;
       })
       .addCase(getAllProducts.fulfilled, (state, action) => {
         state.products = action.payload;
@@ -154,6 +162,7 @@ const productSlice = createSlice({
       .addCase(updateProduct.pending, (state) => {
         state.edit.loading = true;
         state.error = null;
+        state.edit.success = false;
       })
       .addCase(updateProduct.fulfilled, (state) => {
         state.edit.success = true;
@@ -166,7 +175,12 @@ const productSlice = createSlice({
   },
 });
 
-export const { setLimit, setSort, setFilters, resetAddProducts } =
-  productSlice.actions;
+export const {
+  setLimit,
+  setSort,
+  setFilters,
+  resetAddProducts,
+  resetEditProducts,
+} = productSlice.actions;
 
 export default productSlice.reducer;
