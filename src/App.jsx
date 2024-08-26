@@ -20,30 +20,42 @@ import UnAuthLayout from "./layouts/UnAuthLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import { useSelector } from "react-redux";
 import EditProduct from "./pages/products/Edit";
+import {
+  AUTH_ROUTE,
+  CONTACT_ROUTE,
+  DASHBOARD_ROUTE,
+  ELECTRONICS_ROUTE,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+  MEMBER_ROUTE,
+  PRODUCTS_ROUTE,
+  REGISTER_ROUTE,
+  SMARTPHONES_ROUTE,
+} from "./constants/routes";
 
 const App = () => {
   const { user } = useSelector((state) => state.auth);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<MainLayout />}>
+      <Route path={HOME_ROUTE} element={<MainLayout />}>
         <Route>
           <Route index element={<Home />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path={CONTACT_ROUTE} element={<Contact />} />
 
-          <Route path="smartphones">
+          <Route path={SMARTPHONES_ROUTE}>
             <Route index element={<ProductSmartphones />} />
             <Route path=":id" element={<ProductsDetails />} />
             <Route path="edit/:id" element={<EditProduct />} />
           </Route>
 
-          <Route path="products">
+          <Route path={PRODUCTS_ROUTE}>
             <Route index element={<ProductsLists />} />
             <Route path=":id" element={<ProductsDetails />} />
             <Route path="edit/:id" element={<EditProduct />} />
           </Route>
 
-          <Route path="Electronics">
+          <Route path={ELECTRONICS_ROUTE}>
             <Route index element={<ProductElectronics />} />
             <Route path=":id" element={<ProductsDetails />} />
             <Route path="edit/:id" element={<EditProduct />} />
@@ -51,15 +63,15 @@ const App = () => {
         </Route>
 
         <Route element={<UnAuthLayout user={user} />}>
-          <Route path="auth">
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+          <Route path={AUTH_ROUTE}>
+            <Route path={LOGIN_ROUTE} element={<Login />} />
+            <Route path={REGISTER_ROUTE} element={<Register />} />
           </Route>
         </Route>
 
         <Route element={<AuthLayout user={user} />}>
-          <Route path="member">
-            <Route path="dashboard" element={<Dashboard />} />
+          <Route path={MEMBER_ROUTE}>
+            <Route path={DASHBOARD_ROUTE} element={<Dashboard />} />
           </Route>
         </Route>
 
