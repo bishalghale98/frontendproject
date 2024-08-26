@@ -1,33 +1,45 @@
+import {
+  CONTACT_ROUTE,
+  DASHBOARD_ROUTE,
+  ELECTRONICS_ROUTE,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+  MEMBER_ROUTE,
+  PRODUCTS_ROUTE,
+  REGISTER_ROUTE,
+  SMARTPHONES_ROUTE,
+} from "./routes";
+
 const navMenu = [
   {
     id: "home",
     label: "Home",
-    route: "/",
+    route: `${HOME_ROUTE}`,
     auth: false,
   },
   {
     id: "Products",
     label: "Products",
-    route: "/products",
+    route: `${PRODUCTS_ROUTE}`,
     auth: false,
   },
   {
     id: "Smartphones",
     label: "Smartphones",
-    route: "/smartphones",
+    route: `${SMARTPHONES_ROUTE}`,
     auth: false,
   },
   {
     id: "Electronic",
     label: "Electronics",
-    route: "/electronics",
+    route: `${ELECTRONICS_ROUTE}`,
     auth: false,
   },
 
   {
     id: "Contact",
     label: "Contact us",
-    route: "/contact",
+    route: `${CONTACT_ROUTE}`,
     auth: false,
   },
 ];
@@ -36,14 +48,14 @@ const authMenu = [
   {
     id: "Login",
     label: "Login",
-    route: "/auth/login",
+    route: `${HOME_ROUTE}/${LOGIN_ROUTE}`,
     auth: false,
   },
 
   {
     id: "Register",
     label: "Register",
-    route: "/auth/register",
+    route: `${HOME_ROUTE}/${REGISTER_ROUTE}`,
     auth: false,
   },
 ];
@@ -52,7 +64,7 @@ const userMenu = [
   {
     id: "Dashboard",
     label: "Dashboard",
-    route: "/member/dashboard",
+    route: `${MEMBER_ROUTE}/${DASHBOARD_ROUTE}`,
     auth: true,
   },
 ];
