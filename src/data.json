@@ -1,0 +1,18 @@
+{
+  "featuredProducts": [
+    { "id": 1, "name": "Winter Jacket", "price": 59.99, "image": "/images/jacket.jpg" },
+    { "id": 2, "name": "Sweater", "price": 39.99, "image": "/images/sweater.jpg" },
+    { "id": 3, "name": "Scarf", "price": 19.99, "image": "/images/scarf.jpg" },
+    { "id": 4, "name": "Boots", "price": 89.99, "image": "/images/boots.jpg" }
+  ],
+  "categories": [
+    { "name": "Men", "image": "/images/men-category.jpg" },
+    { "name": "Women", "image": "/images/women-category.jpg" },
+    { "name": "Electronics", "image": "/images/electronics-category.jpg" },
+    { "name": "Accessories", "image": "/images/accessories-category.jpg" }
+  ],
+  "reviews": [
+    { "name": "John Doe", "review": "Great products and fast shipping!", "image": "/images/customer1.jpg" },
+    { "name": "Jane Smith", "review": "Love my new sweater. Definitely coming back for more!", "image": "/images/customer2.jpg" }
+  ]
+}
