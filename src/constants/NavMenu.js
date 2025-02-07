@@ -1,4 +1,5 @@
 import {
+  AUTH_ROUTE,
   CONTACT_ROUTE,
   DASHBOARD_ROUTE,
   ELECTRONICS_ROUTE,
@@ -48,14 +49,14 @@ const authMenu = [
   {
     id: "Login",
     label: "Login",
-    route: `${HOME_ROUTE}/${LOGIN_ROUTE}`,
+    route: `${AUTH_ROUTE}/${LOGIN_ROUTE}`,
     auth: false,
   },
 
   {
     id: "Register",
     label: "Register",
-    route: `${HOME_ROUTE}/${REGISTER_ROUTE}`,
+    route: `${AUTH_ROUTE}/${REGISTER_ROUTE}`,
     auth: false,
   },
 ];
