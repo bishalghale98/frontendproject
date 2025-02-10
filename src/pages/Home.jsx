@@ -1,12 +1,7 @@
-// const Home = () => {
-//   return <div></div>;
-// };
-
-// export default Home;
-
 import React from "react";
 import data from "../data.json";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { PRODUCTS_ROUTE } from "../constants/routes";
 
 function App() {
   return (
@@ -21,11 +16,14 @@ function App() {
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            50% off on all Winter Clothing
+            ElectroMart: Laptops, Smartphones & Accessories Hub
           </h1>
-          <button className="bg-orange-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-700 transition-all">
+          <Link
+            to={`${PRODUCTS_ROUTE}`}
+            className="bg-orange-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-700 transition-all"
+          >
             Shop Now
-          </button>
+          </Link>
         </div>
       </section>
 
@@ -41,7 +39,7 @@ function App() {
               key={product.id}
             >
               <img
-                src={product.image}
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStXR0K5XplKhtbp7J43NIBQaEczqACjaJoVg&s"
                 alt={product.name}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
               />
@@ -55,7 +53,7 @@ function App() {
             </div>
           ))}
         </div>
-        <Link to="/products">
+        <Link to={`${PRODUCTS_ROUTE}`}>
           <button className="text-center text-orange-600 mt-8 block mx-auto">
             See More
           </button>
@@ -91,12 +89,12 @@ function App() {
       {/* Promotions Section */}
       <section className="bg-orange-600 text-white py-6 text-center">
         <p className="text-lg font-semibold">
-          Free shipping on orders over $50
+          Free shipping on orders over NPR 5000
         </p>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-12 px-6">
+      {/* <section className="py-12 px-6">
         <h2 className="text-3xl font-semibold text-center mb-8">
           What Our Customers Say
         </h2>
@@ -118,7 +116,7 @@ function App() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Footer Section */}
       <footer className="bg-gray-800 text-white py-8 px-6">
